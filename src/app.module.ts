@@ -7,12 +7,16 @@ import { Skill } from './skill/skill.entity';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { CourseModule } from './course/course.module';
 import { Course } from './course/course.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+    }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: 'mongodb://localhost/begoodat',
+      url: process.env.DB_URL,
       synchronize: true,
       entities: [Skill, Course],
     }),
