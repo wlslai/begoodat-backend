@@ -43,24 +43,16 @@ export class CourseService {
     id: string,
     updateCourseInput: UpdateCourseInput,
   ): Promise<Course> {
-    const { name, startDate, completionDate } = updateCourseInput;
+    if (Object.keys(updateCourseInput).length === 0) {
+      throw new BadRequestException('At least one field need to be updated');
+    }
+
     const course = await this.courseRepository.findOne({ where: { id } });
     if (!course) {
       throw new NotFoundException(`Course with ID ${id} not found`);
-    } else if (Object.keys(updateCourseInput).length === 0) {
-      throw new BadRequestException('At least one field need to be updated');
     }
-    if (name) {
-      course.name = name;
-    }
-    if (startDate || startDate === null) {
-      // Allow setting startDate to null to indicate the course has not started yet
-      course.startDate = startDate;
-    }
-    if (completionDate || completionDate === null) {
-      // Allow setting completionDate to null to indicate the course is not completed yet
-      course.completionDate = completionDate;
-    }
+
+    Object.assign(course, updateCourseInput);
     return this.courseRepository.save(course);
   }
 

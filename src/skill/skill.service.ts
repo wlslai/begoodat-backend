@@ -46,27 +46,17 @@ export class SkillService {
     id: string,
     updateSkillInput: UpdateSkillInput,
   ): Promise<Skill> {
-    const { name, description, startDate, completionDate } = updateSkillInput;
-    const skill = await this.skillRepository.findOne({ where: { id } });
-    if (!skill) {
-      throw new NotFoundException(`Skill with id ${id} not found`);
-    } else if (Object.keys(updateSkillInput).length === 0) {
+    if (Object.keys(updateSkillInput).length === 0) {
       throw new BadRequestException('At least one field need to be updated');
     }
-    if (name) {
-      skill.name = name;
+
+    const skill = await this.skillRepository.findOne({ where: { id } });
+
+    if (!skill) {
+      throw new NotFoundException(`Skill with id ${id} not found`);
     }
-    if (description) {
-      skill.description = description;
-    }
-    if (startDate || startDate === null) {
-      // Allow setting startDate to null to indicate the skill has not started yet
-      skill.startDate = startDate;
-    }
-    if (completionDate || completionDate === null) {
-      // Allow setting completionDate to null to indicate the skill is not completed yet
-      skill.completionDate = completionDate;
-    }
+
+    Object.assign(skill, updateSkillInput);
     return this.skillRepository.save(skill);
   }
 
