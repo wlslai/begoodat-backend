@@ -16,7 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: process.env.DB_URL,
+      url: process.env.MONGO_URI,
       synchronize: true,
       entities: [Skill, Course],
     }),
