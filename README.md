@@ -1,98 +1,120 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🎓 BeGoodAt (Backend)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+**BeGoodAt** is a focused learning management API designed to help developers map out their path to mastery. Instead of getting lost in a sea of tutorials, this tool allows you to structure skills into actionable course checklists, ensuring you always know what’s next on your plate.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project serves as my personal project for experiencing the world of **NoSQL** and **GraphQL**.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🛠 Tech Stack
 
-## Project setup
+This project was my first deep dive into the following technologies:
 
-```bash
-$ npm install
+- **Framework:** [NestJS](https://nestjs.com/) (Progressive Node.js framework)
+- **Database:** [MongoDB](https://www.mongodb.com/) (NoSQL via [TypeORM](https://typeorm.io/))
+- **API Layer:** [GraphQL](https://graphql.org/) (Apollo Server)
+- **Language:** TypeScript
+
+---
+
+## 🏗 Features & Schema
+
+The backend exposes a GraphQL playground where you can:
+
+- **Query** your current learning progress and skill sets.
+- **Mutate** (Add/Update) skills and their nested courses.
+
+### Example Query
+
+```graphql
+query GetAllMySkills {
+  skills {
+    name
+    description
+    startDate
+    completionDate
+    courses {
+      name
+      startDate
+      completionDate
+    }
+  }
+}
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## 🚦 Getting Started
 
-# watch mode
-$ npm run start:dev
+### Prerequisites
 
-# production mode
-$ npm run start:prod
-```
+- Node.js (v18+)
+- MongoDB
 
-## Run tests
+### Installation
 
-```bash
-# unit tests
-$ npm run test
+1.  **Clone the repo:**
+    ```bash
+    git clone https://github.com/wlslai/begoodat-backend.git
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Set up your environment variables:**
+    Create a `.env` file in the root directory:
+    ```env
+    MONGO_URI=mongodb://localhost:27017/begoodat
+    PORT=3000
+    ```
+4.  **Run the application:**
+    ```bash
+    npm run start:dev
+    ```
+5.  **Explore the API:**
+    Open the GraphQL Playground at `http://localhost:3000/graphql`.
 
-# e2e tests
-$ npm run test:e2e
+### MongoDB Installation
 
-# test coverage
-$ npm run test:cov
-```
+Choose one of the following MongoDB installation methods and follow the instructions.
 
-## Deployment
+#### Docker (recommended)
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+1.  **Install Docker for your operating system (if not installed previously)**
+    - [Install Docker Desktop on Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows/)
+    - [Install Docker Desktop on macOS](https://hub.docker.com/editions/community/docker-ce-desktop-mac/)
+    - [Install Docker Desktop on Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2.  **Open up a Terminal session and run:**
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+    ```bash
+      docker run --name mongo -p 27017:27017 -d mongo
+    ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+    MongoDB should be running after starting the container.
 
-## Resources
+#### Windows (non-Docker)
 
-Check out a few resources that may come in handy when working with NestJS:
+[Windows Installation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+#### MacOS
 
-## Support
+[MacOS Installation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+#### Linux
 
-## Stay in touch
+[Linux Installation](https://docs.mongodb.com/manual/administration/install-on-linux/)
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### MongoDB Connection Configuration
 
-## License
+For dev environment, duplicate the `.env.example` file and remove the `.example` extension. You may put the connection details like database url in the `.env` file.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+For production, consider using a secret manager or passing as environment variable when starting the application. Avoid putting sensitive information in the `.env` file.
+
+---
+
+## 📝 Future Considerations
+
+- [ ] Implement JWT Authentication for personal user accounts.
+- [ ] Add "Time-to-Mastery" estimates for each skill based on course length.
+- [ ] Add "Delete" and "Filter" features.
