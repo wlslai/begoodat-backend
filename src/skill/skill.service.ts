@@ -50,23 +50,15 @@ export class SkillService {
       throw new BadRequestException('At least one field need to be updated');
     }
 
-    const skill = await this.skillRepository.findOne({ where: { id } });
-
-    if (!skill) {
-      throw new NotFoundException(`Skill with id ${id} not found`);
-    }
+    const skill = await this.getSkill(id);
 
     Object.assign(skill, updateSkillInput);
     return this.skillRepository.save(skill);
   }
 
   async addCourseToSkill(skillId: string, courseIds: string[]): Promise<Skill> {
-    const skill = await this.skillRepository.findOne({
-      where: { id: skillId },
-    });
-    if (!skill) {
-      throw new NotFoundException(`Skill with id ${skillId} not found`);
-    }
+    const skill = await this.getSkill(skillId);
+
     for (const courseId of courseIds) {
       if (!skill.courses.includes(courseId)) {
         skill.courses.push(courseId);
@@ -79,12 +71,8 @@ export class SkillService {
     skillId: string,
     courseId: string,
   ): Promise<Skill> {
-    const skill = await this.skillRepository.findOne({
-      where: { id: skillId },
-    });
-    if (!skill) {
-      throw new NotFoundException(`Skill with id ${skillId} not found`);
-    }
+    const skill = await this.getSkill(skillId);
+
     skill.courses = skill.courses.filter((id) => id !== courseId);
     return this.skillRepository.save(skill);
   }

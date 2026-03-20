@@ -47,10 +47,7 @@ export class CourseService {
       throw new BadRequestException('At least one field need to be updated');
     }
 
-    const course = await this.courseRepository.findOne({ where: { id } });
-    if (!course) {
-      throw new NotFoundException(`Course with ID ${id} not found`);
-    }
+    const course = await this.getCourse(id);
 
     Object.assign(course, updateCourseInput);
     return this.courseRepository.save(course);
